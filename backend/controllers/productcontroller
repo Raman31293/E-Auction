@@ -1,0 +1,74 @@
+const Product = require('../models/productmodels')
+
+
+// adding products
+
+async function addProduct (req,res){
+    try {
+        const{title, description, image, startingBid, auctionDuration} = req.body;
+        const newProduct = new Product({title, description, image, startingBid, auctionDuration});
+        await newProduct.save();
+        res.send('Product added successfully');
+        
+    } catch (error) {
+        console.error(error);
+        res.send('Server Error')        
+    }
+}
+async function getProduct(req,res){
+    try{
+        const products = await Product.find({}) //in empty braces it find all data
+       res.send(products);       
+
+    }catch (error) {
+        console.log('Error')
+        res.send('Something went wrong ')
+    }   
+
+}
+async function productByIdController(req,res){
+    try {
+        const productId = req.params.id;
+        const product = await Product.findById(productId)
+        if(!product){
+            return res.status(404).send('Product not found');
+        }
+        res.send(product);
+    } catch (error) {
+        console.log('ERROR',error);
+        res.send('Something went wrong')
+        
+    }
+}
+    
+async function placeBid(req, res) {
+    try {
+        const productId = req.params.id;
+        const { bidAmount } = req.body;
+
+        // Find the product by ID
+        const product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).send('Product not found');
+        }
+          // Check if the bid amount is greater than the starting bid amount
+          if (bidAmount <= product.startingBid) {
+            return res.status(400).send('Bid amount must be greater than the starting bid amount');
+        }
+
+        // Update the product's bid information
+        product.highestBid = bidAmount;
+        // Additional logic can be added here, such as comparing the new bid with existing bids
+
+        // Save the updated product
+        await product.save();
+
+        res.send('Bid placed successfully');
+    } catch (error) {
+        console.error('Error placing bid:', error);
+        res.status(500).send('Server Error');
+    }
+}
+
+
+module.exports= { addProduct, getProduct, productByIdController, placeBid };
