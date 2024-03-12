@@ -33,8 +33,9 @@ export default function Home() {
   return (
     <div>
       <Header />
-      <div style={{ margin: "5%" }}>
-        {data.map((e) => (
+      <div style={{ display: "flex" }}>
+        {data.map((e) => (    
+            <div key={e._id} style={{ width: "25%", marginRight: "2%" }}>      
           <Card
             key={e._id}
             title={e.title}
@@ -42,6 +43,7 @@ export default function Home() {
             description={e.description}
             id={e._id}
           />
+          </div>
         ))}
       </div>
     </div>

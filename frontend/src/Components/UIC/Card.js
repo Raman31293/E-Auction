@@ -9,8 +9,8 @@ const moreDetails = () =>{
 };
 
   return (
-    <div style={{margin:"2%"}}>
-      <div className="card col-3" style={{"width": "18rem"}}>
+    <div className="card-container">
+        <div className="card" style={{ borderRadius: "10px", boxShadow: "0 4px 8px rgba(0,0,0,0.1)", margin: "10px" }}>
         <img src={props.image} className="card-img-top" alt="..." />
         <div className="card-body">
           <h5 className="card-title">{props.title}</h5>

@@ -81,23 +81,20 @@ export default function ProductDetail() {
 
   if (data) {
     return (
-      <div>
+      <div style={{ height: "80vh", overflowY: "auto" }}>
         <Header />
-        <div style={{ margin: "2%" }}>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">{data.title}</div>
+        <div style={{width: "50%", margin: "0 auto" }}>
+          <div className="row">            
+            <div className="col-12 text-center"><h4>{data.title}</h4></div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
+          <div className="row">            
+            <div className="col-12 text-center">
               {" "}
-              <img src={data.image} alt="Product" style={{ width: "100%" }} />
+              <img src={data.image} alt="Product" style={{ width: "80%", height: "80%" }} />
             </div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
+          <div className="row">            
+            <div className="col-12 text-center">
               <input
                 type="number"
                 className="form-control"
@@ -107,25 +104,21 @@ export default function ProductDetail() {
               />
             </div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
+          <div className="row">            
+            <div className="col-12 text-center">
               Highest Bid: {currentBid ? currentBid.amount : data.startingBid}
             </div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">{data.startingBid}</div>
+          <div className="row">            
+            <div className="col-12 text-center">{data.startingBid}</div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
+          <div className="row">            
+            <div className="col-12 text-center">
               Auction Duration: {auctionDuration} hours
             </div>
           </div>
-          <div className="row">
-            <div className="col-2"></div>
-            <div className="col-8">
+          <div className="row">            
+            <div className="col-12 text-center">
               {/* Render bid status message */}
               {bidStatus && <div>{bidStatus}</div>}
               <button className="btn btn-primary" onClick={submitBid}>

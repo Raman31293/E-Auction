@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { baseURL } from "../../url";
 import axios from "axios";
 
@@ -8,7 +8,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const[error, setError] = useState('');
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   // function to handle form submission
@@ -22,10 +22,9 @@ export default function Login() {
         localStorage.setItem("Token", response.data.token);
         setTimeout(() => {
           navigate("/home");
-        }, 3000);
-        
+        }, 500);
       } else {
-        setError("Invalid login credentials");//set error message
+        setError("Invalid login credentials"); //set error message
       }
     } catch (error) {
       setError("Login Failed");
@@ -33,10 +32,24 @@ export default function Login() {
   };
 
   return (
-    <div style={{ margin: "2%" }}>
-      <form>
+    <div
+      style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL}/auction.jpg)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh",
+      }}
+    >
+      <form style={{ width: "300px" }}>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ border: "1px solid #D2B48C", borderRadius: "5px" }}
+          >
             Email address
           </label>
           <input
@@ -50,7 +63,11 @@ export default function Login() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
+          <label
+            htmlFor="exampleInputPassword1"
+            className="form-label"
+            style={{ border: "1px solid #D2B48C", borderRadius: "5px" }}
+          >
             Password
           </label>
           <input
@@ -64,10 +81,17 @@ export default function Login() {
           />
         </div>
         {/* Display error message */}
-        {error && <div className="alert alert-danger">{error}</div>}        
-        <button type="submit" className="btn btn-primary" onClick={submitForm}>
+        {error && <div className="alert alert-danger">{error}</div>}
+        <button
+          type="submit"
+          className="btn btn-primary"
+          style={{ margin: "auto", display: "block" }}
+          onClick={submitForm}
+        >
           Login
         </button>
+        <Link to="/registration" className="btn btn-secondary mt-2" style={{  margin: "auto", display: "block" }}>New User Sign Up Here!</Link>
+     
       </form>
     </div>
   );
