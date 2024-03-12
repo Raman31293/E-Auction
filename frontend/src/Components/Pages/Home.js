@@ -6,30 +6,44 @@ import Header from "../UIC/Header";
 
 export default function Home() {
   const [data, setData] = useState([]);
+  
   useEffect(() => {
-    axios.get(`${baseURL}/product/details`)
-    .then((res) => setData(res.data))
-    .catch((error) => console.error('Error fetching data :',error))
+    const token = localStorage.getItem('Token'); // Retrieve token from localStorage
+
+    // Check if token exists
+    if (token) {
+      // Set axios default headers with the token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      // Fetch data with authorization headers
+      axios.get(`${baseURL}/product/details`)
+        .then((res) => setData(res.data))
+        .catch((error) => console.error('Error fetching data:', error));
+    } else {
+      console.error('Token not found. User not authenticated.'); // Handle the case where token doesn't exist
+    }
   }, []);
+  
   console.log(data);  
+
   if (!Array.isArray(data) || data.length === 0) {
-    return<> Loading...</>;}
-    return (
-        <div>
-            <Header />
-        
+    return<> Loading...</>;
+  }
+  
+  return (
+    <div>
+      <Header />
       <div style={{ margin: "5%" }}>
-        {data.map((e) => {
-          return (
-            <Card
-              title={e.title}
-              image = {e.image}
-              description={e.description}
-              id={e._id}
-            />
-          );
-        })}
+        {data.map((e) => (
+          <Card
+            key={e._id}
+            title={e.title}
+            image={e.image}
+            description={e.description}
+            id={e._id}
+          />
+        ))}
       </div>
-      </div>
-    );
-  } 
+    </div>
+  );
+}

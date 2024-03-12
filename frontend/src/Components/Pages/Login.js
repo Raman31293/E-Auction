@@ -19,7 +19,11 @@ export default function Login() {
       const response = await axios.post(`${baseURL}/user/login`, formData);
       console.log(response);
       if (response.status === 200) {
-        navigate("/home");
+        localStorage.setItem("Token", response.data.token);
+        setTimeout(() => {
+          navigate("/home");
+        }, 3000);
+        
       } else {
         setError("Invalid login credentials");//set error message
       }

@@ -26,11 +26,14 @@ export default function ProductDetail() {
 
     // fetch product details
     axios
-      .get(`${baseURL}/product/${id}`)
+      .get(`${baseURL}/product/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("Token")}`, // Include token in headers
+        },
+      })
       .then((res) => {
-        setData(res.data)
-        setAuctionDuration(res.data.auctionDuration); // Set auction duration from server
-    
+        setData(res.data);
+        setAuctionDuration(res.data.auctionDuration);
       })
       .catch((error) => console.error("Error fetching data:", error));
 

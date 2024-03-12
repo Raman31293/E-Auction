@@ -14,9 +14,30 @@ export default function AddProduct() {
     auctionDuration: "",
   });
   // on submit post request
-  const submitForm = () =>{
-    axios.post(`${baseURL}/product/add`, formdata)
+  const submitForm = async () => {
+    try {
+      const token = localStorage.getItem('Token'); // Retrieve token from localStorage
+
+      // Check if token exists
+      if (!token) {
+        console.error('Token not found. User not authenticated.'); // Handle the case where token doesn't exist
+        return;
+      }
+
+      // Set axios default headers with the token
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      
+      // Make post request with authorization headers
+      const response = await axios.post(`${baseURL}/product/add`, formdata);
+      console.log(response.data);
+      
+      // Handle success response if needed
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Handle error response if needed
+    }
   };
+    
   return (
     <div>
       <Header />
